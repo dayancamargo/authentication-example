@@ -1,0 +1,47 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'batata-authentication'
+    version = '0.0.1'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+springBoot {
+    executable = true
+}
+
+dependencies {
+	String jwtVersion = '1.0.8.RELEASE'
+	String jasyptVersion = '1.16'
+
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.security.oauth:spring-security-oauth2')
+	compile("org.springframework.security:spring-security-jwt:$jwtVersion")
+	compile("com.github.ulisesbocchio:jasypt-spring-boot:$jasyptVersion")
+	runtime("com.h2database:h2")
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
+}
