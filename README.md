@@ -1,46 +1,73 @@
 
 - How to Use
+  The project has some examples, just import im postman :)
 
-  Do a _POST_ request with basic auth *(clitato // potatosecret)* to: *http://localhost:8099/login?grant_type=password&username=USER1&password=ABC*
+    - To _get token_:
 
-    Where
+        POST *http://localhost:8099/login*
 
-    username = bd username
+        Headers :
 
-    password = bd password
+            Authorization : basic(client:secret) -> clitato // potatosecret
+            Content-Type : application/x-www-form-urlencoded
 
-   this will generate a token to acess all security endpoints
+        Body :
 
-   And to test token:
-   Send a _GET_ request to *http://localhost:8099/user* with a header
-   "Authorization" : Bearer {access_token}
+            grant_type : password
+            username : user name ( USER1 )
+
+    - To _token refresh_:
+        POST *http://localhost:8099/login*
+
+            Headers :
+
+                Authorization : basic(client:secret) -> clitato // potatosecret
+                Content-Type : application/x-www-form-urlencoded
+
+            Body :
+
+                grant_type : refresh_token
+                client_id : client id ( clitato )
+                refresh_token : refresh token recieved earlier
 
 
+    - Test some security service:
+
+        GET *http://localhost:8099/user*
+
+            Header :
+            Authorization : Bearer {access_token}
+
+        GET *http://localhost:8099/user/POTATO*
+
+            Header :
+            Authorization : Bearer {access_token}
 
 
 * How to use in another service
 
-    In another service, on the main class use this *@EnableResourceServer* annotation, on its application.properties (if springboot application) put this:
+    - In another service, on the main class use this *@EnableResourceServer* annotation, on its application.properties (if springboot application) put this:
 
-        security.oauth2.resource.userInfoUri=http://localhost:8099/usuario/user
+            security.oauth2.resource.userInfoUri=http://localhost:8099/usuario/user
 
     (this endpoint is one which returns a "Principal class")
 
-    And implements something like that(dependencies are basically the same as this project):
+    - Implements something like that (dependencies are basically the same as this project):
 
-       @Configuration
-       public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+           @Configuration
+           public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-           @Override
-           public void configure(HttpSecurity http) throws Exception {
-               http
-                   .authorizeRequests()
-                   .antMatchers("/user/**").hasRole("BATATA") //sets a role for this endpoint
-                   .anyRequest().authenticated();             //all endpoints must have a authorization token autenticated
-               ;
+               @Override
+               public void configure(HttpSecurity http) throws Exception {
+                   http
+                       .authorizeRequests()
+                       .antMatchers("/user/**").hasRole("BATATA") //sets a role for this endpoint
+                       .anyRequest().authenticated();             //all endpoints must have a authorization token autenticated
+                   ;
+               }
+
+               ... another methods...
            }
-       }
-
 
 
 Resources:
@@ -86,3 +113,9 @@ Resources:
     http://www.baeldung.com/spring-security-granted-authority-vs-role
 
     https://stackoverflow.com/questions/19525380/difference-between-role-and-grantedauthority-in-spring-security
+
+* Usefull links
+
+    https://stackoverflow.com/questions/19655911/request-new-access-token-using-refresh-token-in-username-password-grant-in-sprin
+
+    https://www.jamasoftware.com/blog/spring-security-oauth-multi-tenant/
