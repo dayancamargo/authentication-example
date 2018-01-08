@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 /**
  * this is a example how to create a filter to authenticates a user using a user in datasource (defined in User class)
@@ -41,6 +40,10 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     private UserService userService;
 
     @Autowired
+    @Qualifier("tokenConverterDefault")
+    private TokenCustomizer customTokenConverter;
+
+    @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
@@ -50,13 +53,6 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     @Autowired
     @Qualifier("tokenStoreDefault")
     private TokenStore tokenStore;
-
-    /**
-     * helps to convert from jwt <-> Oauth
-     */
-    @Autowired
-    @Qualifier("tokenConverterDefault")
-    private JwtAccessTokenConverter accessTokenConverter;
 
     /**
      * Define endpoint configuration for tokens requets
@@ -69,7 +65,7 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
             .tokenStore(tokenStore) //define token store
             .authenticationManager(authenticationManager) // define how to authenticate
             .userDetailsService(userService) // userService used
-            .accessTokenConverter(accessTokenConverter) //how to convert token
+            .accessTokenConverter(customTokenConverter) //how to convert token
             .pathMapping("/oauth/token", "/login") // define path to generate token, default is url:port/oauth/token
         ;
     }
@@ -87,6 +83,7 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
             .authorizedGrantTypes(grantTypes)
             .accessTokenValiditySeconds(validityTime)
             .refreshTokenValiditySeconds(expirationTime)
+
         ;
     }
 }

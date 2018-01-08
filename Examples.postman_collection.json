@@ -1,0 +1,99 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Security",
+		"_postman_id": "cfe7ff3e-350c-f99b-7335-d662953ebb31",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST-AUTH-REFRESH",
+			"request": {
+				"url": "http://localhost:8099/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic Y2xpdGF0bzpwb3RhdG9zZWNyZXQ=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "clitato",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9wZXJ0eTIiOiJVU0VSMSIsInByb3BlcnR5MSI6InNvbWUgdmFsdWUiLCJ1c2VyX25hbWUiOiJVU0VSMSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJhdGkiOiIyOTk0NjlmMi0wOWIyLTRlNDctOGVmOS0wMDU4YmJjNTRjNjEiLCJleHAiOjE1MTYzMDE1NDUsImF1dGhvcml0aWVzIjpbIlJPTEVfQkFUQVRBIiwiUk9MRV9VU0VSIl0sImp0aSI6IjZhYzI0M2MwLThjNGEtNDMwNy1hMTk1LWIyMmExM2Y3NzM4OSIsImNsaWVudF9pZCI6ImNsaXRhdG8ifQ.fZkU78Cu2IR6zyEwQJPXCmSGTbtlfuD5cpNGCcwMn6o",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST-AUTH-LOGIN",
+			"request": {
+				"url": "http://localhost:8099/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic Y2xpdGF0bzpwb3RhdG9zZWNyZXQ=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "USER1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "ABC",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

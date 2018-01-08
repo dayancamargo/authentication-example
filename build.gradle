@@ -43,5 +43,4 @@ dependencies {
 	compile("com.github.ulisesbocchio:jasypt-spring-boot:$jasyptVersion")
 	runtime("com.h2database:h2")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.springframework.security:spring-security-test')
 }

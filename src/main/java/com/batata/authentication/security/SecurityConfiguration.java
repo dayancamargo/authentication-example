@@ -88,15 +88,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     //define token objects
-
     @Bean(name ="tokenStoreDefault")
     public TokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
     }
 
     @Bean(name ="tokenConverterDefault")
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+    public TokenCustomizer accessTokenConverter() {
+        TokenCustomizer converter = new TokenCustomizer();
         converter.setSigningKey(clientKey);
         return converter;
     }
